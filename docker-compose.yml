@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  code-editor-nextjs:
+    build: .
+    container_name: code-editor
+    image: code-editor:latest
+    env_file:
+      - .env
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - ${PWD}:/app
+    ports:
+      - 3100:3000
+    networks:
+      - code-editor-network
+
+networks:
+  code-editor-network:
+    external: true
