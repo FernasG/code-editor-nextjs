@@ -1,13 +1,20 @@
-import { ButtonEl, Props } from './styles';
+import { ButtonBox, Props } from './styles';
 
 interface ButtonProps extends Props {
   text: string;
 }
 
-export const Button = (({ textColor, borderColor, backgroundColor, text }: ButtonProps) => {
+export const Button = ((props: ButtonProps): JSX.Element => {
   return (
     <>
-      <ButtonEl textColor={textColor} borderColor={borderColor} backgroundColor={backgroundColor}>{text}</ButtonEl>
+      <ButtonBox
+        width={props.width} textColor={props.textColor}
+        borderColor={props.borderColor} backgroundColor={props.backgroundColor}
+        hoverBorderColor={props.hoverBorderColor} hoverTextColor={props.hoverTextColor}
+        hoverBackgroundColor={props.hoverBackgroundColor}
+      >
+        {props.text}
+      </ButtonBox>
     </>
   );
 });

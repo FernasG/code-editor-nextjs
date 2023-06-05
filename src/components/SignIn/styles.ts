@@ -16,7 +16,7 @@ export const Container = styled.div<Props>`
 export const SignInBox = styled(Container)`
   top: 50%;
   left: 50%;
-  padding: 10px;
+  padding: 20px 10px;
   position: absolute;
   transform: translate(-50%, -50%);
 `;
@@ -33,4 +33,27 @@ export const TitleBox = styled.div`
 export const Title = styled.h1`
   font-size: 1.5em;
   font-weight: bold;
+`;
+
+export const BodyBox = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  >input {
+    margin-bottom: 15px;
+  }
+`;
+
+export const FooterBox = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  >:nth-child(1) {
+    margin-bottom: 20px;
+  }
 `;

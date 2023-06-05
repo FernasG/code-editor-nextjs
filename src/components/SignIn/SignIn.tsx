@@ -1,5 +1,5 @@
-import { Props, SignInBox, TitleBox, Title } from './styles';
-import { Input, Link, Button } from '..';
+import { Props, SignInBox, TitleBox, Title, BodyBox, FooterBox } from './styles';
+import { Link, Input, Button } from '..';
 
 export const SignIn = (({ width, height }: Props): JSX.Element => {
   return (
@@ -9,13 +9,21 @@ export const SignIn = (({ width, height }: Props): JSX.Element => {
           <Title>Sign In</Title>
         </TitleBox>
 
-        <div>
-          <Input labelText={'Email'} inputType={'email'}></Input>
-          <Input labelText={'Password'} inputType={'password'}></Input>
-          <Link text={'Not registered yet? Sign Up.'} color={'--second-color'}></Link>
+        <BodyBox>
+          <Input inputPlaceholder={'Email'} inputType={'email'}></Input>
+          <Input inputPlaceholder={'Password'} inputType={'password'}></Input>
+        </BodyBox>
 
-          {/* <Button text={'Sign In'} textColor={'#FFFFF'}></Button> */}
-        </div>
+        <FooterBox>
+          <Link text={'Not registered yet? Sign Up.'} color={'--second-color'}></Link>
+          <Button
+            width='100px'
+            text={'Sign In'}
+            textColor={'var(--white)'}
+            backgroundColor={'var(--neon-blue)'}
+            borderColor={'var(--neon-blue)'}
+          ></Button>
+        </FooterBox>
       </SignInBox>
     </>
   );

@@ -1,4 +1,4 @@
-import { LabelEl } from './styles';
+import { LabelBox } from './styles';
 
 interface Props {
   text: string;
@@ -7,7 +7,7 @@ interface Props {
 export const Label = (({ text }: Props): JSX.Element => {
   return (
     <>
-      <LabelEl>{text}</LabelEl>
+      <LabelBox>{text}</LabelBox>
     </>
   );
 });
