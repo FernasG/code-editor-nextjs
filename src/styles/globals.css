@@ -26,6 +26,7 @@
   --magnolia: #efe9f4ff;
   --eerie-black: #171d1cff;
   --neon-blue: #5863f8ff;
+  --dark-neon-blue: rgb(63, 76, 255);
 }
 
 * {
