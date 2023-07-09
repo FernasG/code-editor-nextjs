@@ -1,16 +1,18 @@
-import { Users } from '@libraries';
+import { useState } from 'react';
 import { Props, SignInBox, TitleBox, Title, BodyBox, FooterBox } from './styles';
 import { Link, Input, Button } from '..';
-import { useState } from 'react';
+import { Users } from '@libraries';
+import { useRouter } from 'next/navigation';
 
 export const SignIn = (({ width, height }: Props): JSX.Element => {
+  const { push } = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (async () => {
-    const requestResult = await Users.login(email, password);
+  const handleSignIn = (async () => {
+    const loginRequest = await Users.signIn(email, password);
 
-    console.log(requestResult);
+    if (loginRequest) push('/codespaces');
   });
 
   return (
@@ -38,7 +40,7 @@ export const SignIn = (({ width, height }: Props): JSX.Element => {
         <FooterBox>
           <Link text={'Not registered yet? Sign Up.'} color={'--second-color'}></Link>
           <Button
-            onClick={handleLogin}
+            onClick={handleSignIn}
             width='100px' text={'Sign In'} textColor={'var(--white)'}
             backgroundColor={'var(--neon-blue)'} borderColor={'var(--neon-blue)'}
             hoverBackgroundColor={'var(--dark-neon-blue)'} hoverBorderColor={'var(--dark-neon-blue)'}

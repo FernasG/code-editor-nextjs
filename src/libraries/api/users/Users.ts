@@ -1,11 +1,15 @@
-import { RequestService } from '@libraries';
+import { RequestService, StorageService } from '@libraries';
 
 export class Users {
-    static async login(email: string, password: string) {
-        const response = await RequestService({ useToken: false }).post('users/login', { email, password });
+  static async signIn(email: string, password: string) {
+    const response = await RequestService({ useToken: false }).post('users/login', { email, password });
 
-        if (response.statusCode !== 200) return response;
+    if (response.statusCode !== 200) return false;
 
-        return response;
-    }
+    const { session_token, username } = response;
+
+    StorageService.setN({ session_token, username, email, is_logged_in: 'true' });
+
+    return response;
+  }
 }
