@@ -1,9 +1,13 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { BiPlus, BiLogoPython, BiLogoJavascript } from 'react-icons/bi';
-import { Body, Button, Card, CardBody, CardTitle, Container, Header, PanelButtons, Title } from './styles';
+import { BiPlus } from 'react-icons/bi';
+import { Body, Button, Container, Header, PanelButtons, Title } from './styles';
 import { Codespaces } from '@libraries';
+import { Card } from '@components';
 
+interface Props {
+  setCodespace: any;
+}
 interface Codespace {
   id: string;
   name: string;
@@ -11,7 +15,7 @@ interface Codespace {
   updated_at: string;
 }
 
-export const Panel = ((): JSX.Element => {
+export const Panel = (({ setCodespace }: Props): JSX.Element => {
   const { push } = useRouter();
   const [codespaces, setCodespaces] = useState<Codespace[]>([]);
 
@@ -20,9 +24,13 @@ export const Panel = ((): JSX.Element => {
     setCodespaces(response.data);
   });
 
-  useEffect(() => { getCodespaces() });
+  useEffect(() => { getCodespaces(); }, []);
 
-  const handleOnClick = ((id: string) => push(`codespaces?id=${id}`));
+  const handleOnClick = (async (id: string) => {
+    push(`codespaces?id=${id}`);
+    const response = await Codespaces.findOne(id).catch(err => { });
+    if (response) setCodespace(response.data);
+  });
 
   return (
     <>
@@ -38,17 +46,15 @@ export const Panel = ((): JSX.Element => {
         </Header>
         <Body>
           {
-            codespaces.map(codespace => {
+            codespaces.map(({ id, name, language, updated_at }) => {
               return (
-                <>
-                  <Card onClick={() => handleOnClick(codespace.id)}>
-                    <CardTitle>
-                      <span>{codespace.name}</span>
-                      {codespace.language === 'python' ? <BiLogoPython size={'15pt'} /> : <BiLogoJavascript size={'15pt'} />}
-                    </CardTitle>
-                    <CardBody>Atualizado em: {new Date(codespace.updated_at).toLocaleString('pt-br', { dateStyle: 'medium' })}</CardBody>
-                  </Card>
-                </>
+                <Card
+                  id={id}
+                  name={name}
+                  language={language}
+                  updated_at={updated_at}
+                  onClick={(() => handleOnClick(id))}
+                />
               );
             })
           }

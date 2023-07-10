@@ -12,6 +12,7 @@
   --layer-24: rgb(56, 56, 56);
 
   --white: #FFFFFF;
+  --black: #000000;
 
   --text-layer-01: #1F1B24;
   --second-color: #acacac;
@@ -29,6 +30,9 @@
   --eerie-black: #171d1cff;
   --neon-blue: #5863f8ff;
   --dark-neon-blue: rgb(63, 76, 255);
+
+  --burnt-sienna: #DE6449;
+  --cerulean: #407899;
 }
 
 * {

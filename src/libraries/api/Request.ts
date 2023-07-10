@@ -16,10 +16,10 @@ export const RequestService = ((config?: RequestServiceConfig) => {
   const axiosInstance = axios.create(axiosConfig);
 
   return {
-    get: (async (url: string) => handleRequest(axiosInstance.get(url))),
-    put: (async (url: string, data: any) => handleRequest(axiosInstance.put(url, data))),
-    post: (async (url: string, data: any) => handleRequest(axiosInstance.post(url, data))),
-    patch: (async (url: string, data: any) => handleRequest(axiosInstance.patch(url, data))),
+    get: (async (url: string, params?: any) => handleRequest(axiosInstance.get(url, { params }))),
+    put: (async (url: string, data?: any) => handleRequest(axiosInstance.put(url, data))),
+    post: (async (url: string, data?: any) => handleRequest(axiosInstance.post(url, data))),
+    patch: (async (url: string, data?: any) => handleRequest(axiosInstance.patch(url, data))),
     delete: (async (url: string) => handleRequest(axiosInstance.delete(url)))
   };
 });
@@ -27,9 +27,6 @@ export const RequestService = ((config?: RequestServiceConfig) => {
 
 const handleRequest = (async (request: Promise<any>): Promise<any> => {
   return request
-    .then(({ status, data }) => {
-      const ext = Array.isArray(data) ? { data } : data;
-      return { statusCode: status, ...ext };
-    })
-    .catch(({ response: { status, data } }) => { return { statusCode: status, ...data } });
+    .then(({ status, data }) => { return { statusCode: status, data } })
+    .catch(({ response: { status, data } }) => { return { statusCode: status, data } });
 });

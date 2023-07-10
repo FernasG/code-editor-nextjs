@@ -6,7 +6,7 @@ export class Users {
 
     if (response.statusCode !== 200) return false;
 
-    const { session_token, username } = response;
+    const { data: { session_token, username } } = response;
 
     StorageService.setN({ session_token, username, email, is_logged_in: 'true' });
 
