@@ -1,3 +1,13 @@
+import { Container, Overlay } from "./styles";
+
 export const Modal = ((): JSX.Element => {
-  return (<></>);
+  return (
+    <>
+      <Overlay show={true}>
+        <Container>
+          
+        </Container>
+      </Overlay>
+    </>
+  );
 });

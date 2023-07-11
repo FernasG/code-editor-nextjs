@@ -1,8 +1,8 @@
 import Monaco from '@monaco-editor/react';
+import { useState } from 'react';
 import { Codespaces } from '@libraries';
 import { Terminal, Toolbar } from '@components';
 import { Container, Section } from './styles';
-import { useEffect, useState } from 'react';
 
 interface Props {
   id: string;
@@ -12,7 +12,7 @@ interface Props {
 
 export const Editor = (({ id, source, language }: Props): JSX.Element => {
   const [code, setCode] = useState('');
-  const [request, setRequest] = useState<{ id: string; output: string }>();
+  const [request, setRequest] = useState<{ id: string; code_output: string }>();
 
   const handleEditorChange = ((value: string | undefined, e: any) => {
     if (value) setCode(value);
@@ -25,22 +25,23 @@ export const Editor = (({ id, source, language }: Props): JSX.Element => {
 
   const handleRunCode = (async () => {
     const response = await Codespaces.run(id);
-    if (response) setRequest(response.data.request);
-  });
 
-  useEffect(() => {
-    if (request) {
-      console.log(request);
+    if (response) {
+      const { data: { request: req } } = response;
+      setRequest(req);
+
       const interval = setInterval(async () => {
-        const response = await Codespaces.findRequest(id, request.id);
-        if (response) setRequest(response.data);
-      }, 1500);
+        const { data } = await Codespaces.findRequest(id, req.id);
 
-      if (request.output) clearInterval(interval);
+        if (data) {
+          setRequest(data);
 
-      return (() => clearInterval(interval));
+          if (data.code_output) clearInterval(interval);
+        }
+
+      }, 1000);
     }
-  }, [request]);
+  });
 
   return (
     <>
@@ -54,7 +55,7 @@ export const Editor = (({ id, source, language }: Props): JSX.Element => {
             onChange={handleEditorChange}
             value={source}
           />
-          <Terminal />
+          <Terminal text={request?.code_output} />
         </Section>
       </Container>
     </>

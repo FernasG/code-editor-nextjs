@@ -2,8 +2,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import { Body, Button, Container, Header, PanelButtons, Title } from './styles';
+import { Card, Modal } from '@components';
 import { Codespaces } from '@libraries';
-import { Card } from '@components';
 
 interface Props {
   setCodespace: any;
@@ -34,6 +34,7 @@ export const Panel = (({ setCodespace }: Props): JSX.Element => {
 
   return (
     <>
+      <Modal></Modal>
       <Container>
         <Header>
           <Title>Codespaces</Title>

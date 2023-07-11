@@ -1,9 +1,18 @@
 import { Container } from './styles';
+import { JetBrains_Mono } from 'next/font/google';
 
-export const Terminal = ((): JSX.Element => {
+const jetBrainsMono = JetBrains_Mono({ subsets: ['latin'] });
+
+interface Props {
+  text?: string;
+}
+
+export const Terminal = (({ text }: Props): JSX.Element => {
   return (
     <>
-      <Container></Container>
+      <Container className={jetBrainsMono.className}>
+        {text}
+      </Container>
     </>
   );
 });

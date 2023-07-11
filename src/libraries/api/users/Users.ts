@@ -4,7 +4,7 @@ export class Users {
   static async signIn(email: string, password: string) {
     const response = await RequestService({ useToken: false }).post('users/login', { email, password });
 
-    if (response.statusCode !== 200) return false;
+    if (response.statusCode !== 200) return response;
 
     const { data: { session_token, username } } = response;
 

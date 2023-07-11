@@ -1,19 +1,26 @@
-import { useState } from 'react';
-import { Props, SignInBox, TitleBox, Title, BodyBox, FooterBox } from './styles';
-import { Link, Input, Button } from '..';
-import { Users } from '@libraries';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Props, SignInBox, TitleBox, Title, BodyBox, FooterBox } from './styles';
+import { Alert, Link, Input, Button } from '@components';
+import { Users } from '@libraries';
 
 export const SignIn = (({ width, height }: Props): JSX.Element => {
   const { push } = useRouter();
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignIn = (async () => {
     const loginRequest = await Users.signIn(email, password);
 
-    if (loginRequest) push('/codespaces');
+    if (loginRequest.statusCode === 200) push('/codespaces');
+
+    const { data: { message } } = loginRequest;
+
+    setMessage(message);
   });
+
+  useEffect(() => { }, [message]);
 
   return (
     <>
@@ -47,6 +54,7 @@ export const SignIn = (({ width, height }: Props): JSX.Element => {
           ></Button>
         </FooterBox>
       </SignInBox>
+      {message && <Alert text={message} type={'error'} />}
     </>
   );
 });
