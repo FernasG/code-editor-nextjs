@@ -1,6 +1,6 @@
+import { BiPlus } from 'react-icons/bi';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { BiPlus } from 'react-icons/bi';
 import { Body, Button, Container, Header, PanelButtons, Title } from './styles';
 import { Card, Modal } from '@components';
 import { Codespaces } from '@libraries';
@@ -17,6 +17,7 @@ interface Codespace {
 
 export const Panel = (({ setCodespace }: Props): JSX.Element => {
   const { push } = useRouter();
+  const [show, setShow] = useState(false);
   const [codespaces, setCodespaces] = useState<Codespace[]>([]);
 
   const getCodespaces = (async () => {
@@ -32,14 +33,26 @@ export const Panel = (({ setCodespace }: Props): JSX.Element => {
     if (response) setCodespace(response.data);
   });
 
+  const handleCreateCodespace = (async (name: string, description: string, language: string) => {
+    const response = await Codespaces.create(name, description, language);
+
+    if (!response) console.log('deu ruim');
+
+    const { data } = response;
+
+    setShow(false);
+    setCodespaces([...codespaces, data]);
+  });
+
+
   return (
     <>
-      <Modal></Modal>
+      <Modal show={show} setShow={setShow} onClickSave={handleCreateCodespace} />
       <Container>
         <Header>
           <Title>Codespaces</Title>
           <PanelButtons>
-            <Button>
+            <Button onClick={((e) => setShow(true))}>
               <span>Add Codespace</span>
               <BiPlus size={'15pt'} fontWeight={'bold'} />
             </Button>

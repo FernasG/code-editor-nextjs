@@ -17,6 +17,14 @@ export class Codespaces {
     return response;
   }
 
+  static async create(name: string, description: string, language: string) {
+    const response = await RequestService().post('codespaces', { name, description, language });
+
+    if (response.statusCode !== 201) return false;
+
+    return response;
+  }
+
   static async save(id: string, code: string) {
     const response = await RequestService().post('codespaces/save', { id, code });
 

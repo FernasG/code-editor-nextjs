@@ -13,6 +13,7 @@
 
   --white: #FFFFFF;
   --black: #000000;
+  --gray: #4E4E4E;
 
   --text-layer-01: #1F1B24;
   --second-color: #acacac;
@@ -49,4 +50,20 @@ button {
   border: none;
   cursor: pointer;
   background: none;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+textarea {
+  overflow: hidden;
 }
