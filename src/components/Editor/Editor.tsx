@@ -1,8 +1,8 @@
 import Monaco from '@monaco-editor/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Codespaces } from '@libraries';
-import { Terminal, Toolbar } from '@components';
 import { Container, Section } from './styles';
+import { Alert, Terminal, Toolbar } from '@components';
 
 interface Props {
   id: string;
@@ -12,6 +12,10 @@ interface Props {
 
 export const Editor = (({ id, source, language }: Props): JSX.Element => {
   const [code, setCode] = useState('');
+  const [show, setShow] = useState(false);
+  const [type, setType] = useState<any>('');
+  const [message, setMessage] = useState('');
+  const [codeBefore, setCodeBefore] = useState('');
   const [request, setRequest] = useState<{ id: string; code_output: string }>();
 
   const handleEditorChange = ((value: string | undefined, e: any) => {
@@ -19,19 +23,36 @@ export const Editor = (({ id, source, language }: Props): JSX.Element => {
   });
 
   const handleSaveCode = (async () => {
-    const response = await Codespaces.save(id, code);
-    console.log(response);
+    const { error, data: { message } } = await Codespaces.save(id, code);
+
+    if (!error) {
+      setType('success');
+      setCodeBefore(code);
+    } else setType('error');
+
+    setMessage(message);
+    setShow(true);
   });
 
   const handleRunCode = (async () => {
-    const response = await Codespaces.run(id);
+    if (code !== codeBefore) {
+      setType('warning');
+      setMessage('Save code before running.');
+      setShow(true);
+      return;
+    }
 
-    if (response) {
-      const { data: { request: req } } = response;
-      setRequest(req);
+    const { error, data: { request, message } } = await Codespaces.run(id);
+
+    setType(error ? 'error' : 'success');
+    setMessage(message);
+    setShow(true);
+
+    if (!error) {
+      setRequest(request);
 
       const interval = setInterval(async () => {
-        const { data } = await Codespaces.findRequest(id, req.id);
+        const { data } = await Codespaces.findRequest(id, request.id);
 
         if (data) {
           setRequest(data);
@@ -42,6 +63,8 @@ export const Editor = (({ id, source, language }: Props): JSX.Element => {
       }, 1000);
     }
   });
+
+  useEffect(() => { setCodeBefore(source); }, []);
 
   return (
     <>
@@ -58,6 +81,7 @@ export const Editor = (({ id, source, language }: Props): JSX.Element => {
           <Terminal text={request?.code_output} />
         </Section>
       </Container>
+      {show && <Alert setShow={setShow} show={show} text={message} type={type} />}
     </>
   );
 });

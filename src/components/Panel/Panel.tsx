@@ -2,7 +2,7 @@ import { BiPlus } from 'react-icons/bi';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Body, Button, Container, Header, PanelButtons, Title } from './styles';
-import { Card, Modal } from '@components';
+import { Alert, Card, Modal } from '@components';
 import { Codespaces } from '@libraries';
 
 interface Props {
@@ -17,7 +17,10 @@ interface Codespace {
 
 export const Panel = (({ setCodespace }: Props): JSX.Element => {
   const { push } = useRouter();
-  const [show, setShow] = useState(false);
+  const [type, setType] = useState<any>('');
+  const [message, setMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [codespaces, setCodespaces] = useState<Codespace[]>([]);
 
   const getCodespaces = (async () => {
@@ -36,23 +39,26 @@ export const Panel = (({ setCodespace }: Props): JSX.Element => {
   const handleCreateCodespace = (async (name: string, description: string, language: string) => {
     const response = await Codespaces.create(name, description, language);
 
-    if (!response) console.log('deu ruim');
+    const { error, data: { message, codespace: data } } = response;
+    setMessage(message);
+    setType(error ? 'error' : 'success');
+    setShowAlert(true);
 
-    const { data } = response;
-
-    setShow(false);
-    setCodespaces([...codespaces, data]);
+    if (!error) {
+      setShowModal(false);
+      setCodespaces([...codespaces, data]);
+    }
   });
 
 
   return (
     <>
-      <Modal show={show} setShow={setShow} onClickSave={handleCreateCodespace} />
+      <Modal show={showModal} setShow={setShowModal} onClickSave={handleCreateCodespace} />
       <Container>
         <Header>
           <Title>Codespaces</Title>
           <PanelButtons>
-            <Button onClick={((e) => setShow(true))}>
+            <Button onClick={((e) => setShowModal(true))}>
               <span>Add Codespace</span>
               <BiPlus size={'15pt'} fontWeight={'bold'} />
             </Button>
@@ -74,6 +80,7 @@ export const Panel = (({ setCodespace }: Props): JSX.Element => {
           }
         </Body>
       </Container>
+      {showAlert && <Alert setShow={setShowAlert} show={showAlert} text={message} type={type} />}
     </>
   );
 });

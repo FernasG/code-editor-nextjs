@@ -6,18 +6,28 @@ import { Users } from '@libraries';
 
 export const SignIn = (({ width, height }: Props): JSX.Element => {
   const { push } = useRouter();
+  const [show, setShow] = useState(false);
   const [email, setEmail] = useState('');
+  const [type, setType] = useState<any>('');
   const [message, setMessage] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignIn = (async () => {
     const loginRequest = await Users.signIn(email, password);
 
-    if (loginRequest.statusCode === 200) push('/codespaces');
+    if (loginRequest.statusCode === 200) {
+      push('/codespaces');
 
-    const { data: { message } } = loginRequest;
+      setType('success');
+      setMessage('Login successful.');
+    } else {
+      const { data: { message } } = loginRequest;
 
-    setMessage(message);
+      setType('error');
+      setMessage(message);
+    }
+
+    setShow(true);
   });
 
   useEffect(() => { }, [message]);
@@ -54,7 +64,7 @@ export const SignIn = (({ width, height }: Props): JSX.Element => {
           ></Button>
         </FooterBox>
       </SignInBox>
-      {message && <Alert text={message} type={'error'} />}
+      {show && <Alert text={message} show={show} setShow={setShow} type={type} />}
     </>
   );
 });

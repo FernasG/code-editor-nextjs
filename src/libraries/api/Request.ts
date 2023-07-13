@@ -27,6 +27,6 @@ export const RequestService = ((config?: RequestServiceConfig) => {
 
 const handleRequest = (async (request: Promise<any>): Promise<any> => {
   return request
-    .then(({ status, data }) => { return { statusCode: status, data } })
-    .catch(({ response: { status, data } }) => { return { statusCode: status, data } });
+    .then(({ status, data }) => { return { statusCode: status, error: false, data } })
+    .catch(({ response: { status, data } }) => { return { statusCode: status, error: true, data } });
 });

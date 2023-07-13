@@ -1,6 +1,22 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Container, HeaderOptions, HeaderTitle, InputField, Input, Label, ModalBody, ModalFooter, ModalHeader, Overlay, Select, Option, TextArea, CreateButton, CancelButton } from './styles';
+import {
+  Input,
+  Label,
+  Select,
+  Option,
+  Overlay,
+  TextArea,
+  ModalBody,
+  Container,
+  InputField,
+  HeaderTitle,
+  ModalFooter,
+  ModalHeader,
+  CreateButton,
+  CancelButton,
+  HeaderOptions
+} from './styles';
 
 interface Props {
   show: boolean;

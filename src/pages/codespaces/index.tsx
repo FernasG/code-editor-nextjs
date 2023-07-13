@@ -11,7 +11,9 @@ export default function Codespaces() {
   const [codespace, setCodespace] = useState<{ id: string; code: string; language: string; } | null>(null);
   const { push } = useRouter();
 
-  useEffect(() => { if (!codespace) push('codespaces'); }, [codespace]);
+  useEffect(() => {
+    if (!codespace) push('codespaces'); 
+  }, [codespace]);
 
   return (
     <>

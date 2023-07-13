@@ -7,7 +7,7 @@ interface Props {
   type: AlertTypes;
 }
 
-const Colors: Readonly<{ [x: string]: string }> = { error: 'cinnabar', success: 'jade', warning: 'jonquil' };
+const Colors: Readonly<{ [x: string]: string }> = { error: 'cinnabar', success: 'jade', warning: 'fulvous' };
 
 const ColorMap = ((type: AlertTypes) => {
   const color = Colors[type];
@@ -16,12 +16,12 @@ const ColorMap = ((type: AlertTypes) => {
 })
 
 export const Container = styled.div<Props>`
-  min-width: 150px;
-  min-height: 70px;
+  width: 300px;
+  min-height: 50px;
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 1;
+  z-index: 5;
   display: flex;
   padding: 10px;
   background: ${(props) => ColorMap(props.type)};

@@ -2,50 +2,26 @@ import { RequestService } from "../Request";
 
 export class Codespaces {
   static async findAll() {
-    const response = await RequestService().get('codespaces');
-
-    if (response.statusCode !== 200) return false;
-
-    return response;
+    return RequestService().get('codespaces');
   }
 
   static async findOne(id: string) {
-    const response = await RequestService().get(`codespaces/${id}`);
-
-    if (response.statusCode !== 200) return false;
-
-    return response;
+    return RequestService().get(`codespaces/${id}`);
   }
 
   static async create(name: string, description: string, language: string) {
-    const response = await RequestService().post('codespaces', { name, description, language });
-
-    if (response.statusCode !== 201) return false;
-
-    return response;
+    return RequestService().post('codespaces', { name, description, language });
   }
 
   static async save(id: string, code: string) {
-    const response = await RequestService().post('codespaces/save', { id, code });
-
-    if (response.statusCode !== 200) return false;
-
-    return response;
+    return RequestService().post('codespaces/save', { id, code });
   }
 
   static async run(id: string) {
-    const response = await RequestService().patch(`codespaces/run/${id}`);
-
-    if (response.statusCode !== 200) return false;
-
-    return response;
+    return RequestService().patch(`codespaces/run/${id}`);
   }
 
   static async findRequest(id: string, request_id: string) {
-    const response = await RequestService().get(`codespaces/request/${id}`, { request_id });
-
-    if (response.statusCode !== 200) return false;
-
-    return response;
+    return RequestService().get(`codespaces/request/${id}`, { request_id });
   }
 }
