@@ -8,10 +8,19 @@ interface Props {
 }
 
 export const Terminal = (({ text }: Props): JSX.Element => {
+  const treatOutput = (() => {
+    if (!text) return [];
+    return text.split('\n');
+  });
+
   return (
     <>
       <Container className={jetBrainsMono.className}>
-        {text}
+        {
+          text && treatOutput().map((line) => {
+            return (<p>{line}</p>);
+          })
+        }
       </Container>
     </>
   );
