@@ -1,38 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# COM222 - Code Editor NextJS (Front-end)
 
-## Getting Started
+![alt last commit](https://img.shields.io/github/last-commit/FernasG/code-editor-nextjs?style=flat-square)
+![alt files in src](https://img.shields.io/github/directory-file-count/FernasG/code-editor-nextjs/src?label=files&style=flat-square)
 
-First, run the development server:
+O Code Editor é um editor de código online, permitindo aos desenvolvedores criar, armazenar e executar seus projetos em diversas linguagens como JavaScript e Python, tirando o trabalho necessário para configurar um ambiente de desenvolvimento, tarefa que pode ser difícil e complexa para novos programadores.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## Dependências
+
+- React;
+- Axios;
+- Next.JS;
+- TypeScript;
+- Monaco Editor;
+
+[![Dependencies](https://skillicons.dev/icons?i=nextjs,typescript,docker,html,css&theme=dark)](https://skillicons.dev)
+
+## Instalação
+
+:warning: Esse repositório é complementar ao [Code Editor Backend](https://github.com/FernasG/code-editor-nestjs), para tudo funcionar perfeitamente você deve clonar e rodar ele antes do front-end.
+
+### Configuração de Ambiente
+
+Para rodar o projeto é necessário instalar o `Docker`, `Docker-Compose` e `Make`.
+
+- Manual de instalação do [Docker](https://docs.docker.com/engine/install/), [Docker-Compose](https://docs.docker.com/compose/install/) e [Make](https://cmake.org/install/);
+
+### Variáveis de Ambiente
+
+1. Renomeie o arquivo `.env.example` para `.env`;
+2. No campo `API_URL` você deve inserir a URL do [Code Editor Backend](https://github.com/FernasG/code-editor-nestjs), que possivelmente é `localhost:3000`.
+
+### Execução
+
+Com o ambiente configurado abra o terminal na raiz do projeto e execute o comando:
 ```
+make up
+```
+Esse comando fará o _build_ do projeto, após finalizar você verá a seguinte mensagem no terminal:
+```
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+```
+Como o projeto está rodando no Docker é feito um roteamento da porta 3000 interna do container para a porta 3100 de sua máquina, dessa forma a URL que você deve acessar em seu navegador é o `localhost:3100`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Autores
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Fernando Goulart](https://www.linkedin.com/in/fernando-goulart-2534901b9/)
