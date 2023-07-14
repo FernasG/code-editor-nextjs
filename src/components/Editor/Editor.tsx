@@ -64,9 +64,9 @@ export const Editor = (({ id, source, language }: Props): JSX.Element => {
     }
   });
 
-  useEffect(() => { 
+  useEffect(() => {
     setCode(source);
-    setCodeBefore(source); 
+    setCodeBefore(source);
   }, []);
 
   return (
